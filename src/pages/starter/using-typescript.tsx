@@ -2,8 +2,8 @@
 import * as React from "react"
 import { PageProps, Link, graphql } from "gatsby"
 
-import Layout from "../components/layout"
-import Seo from "../components/seo"
+import Layout from "../../components/layout"
+import Seo from "../../components/seo"
 
 type DataProps = {
   site: {
@@ -35,7 +35,7 @@ const UsingTypescript: React.FC<PageProps<DataProps>> = ({ data, path }) => (
       </a>
       .
     </p>
-    <Link to="/">Go back to the homepage</Link>
+    <Link to="/starter" className="text-blue-500">Go back to the homepage</Link>
   </Layout>
 )
 

@@ -1,8 +1,8 @@
 import * as React from "react"
 import { Link } from "gatsby"
 
-import Layout from "../components/layout"
-import Seo from "../components/seo"
+import Layout from "../../components/layout"
+import Seo from "../../components/seo"
 
 const UsingSSR = ({ serverData }) => {
   return (
@@ -22,7 +22,7 @@ const UsingSSR = ({ serverData }) => {
         </a>
         .
       </p>
-      <Link to="/">Go back to the homepage</Link>
+      <Link to="/starter" className="text-blue-500">Go back to the homepage</Link>
     </Layout>
   )
 }
