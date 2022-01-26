@@ -1,7 +1,7 @@
 import React, { useRef, useState } from 'react'
 import gsap from "gsap"
 
-function BasicExitAnimation({ children, vars }) {
+function BasicExitAnimation() {
     const boxRef = useRef();
     const [active, setActive] = useState(true);
   

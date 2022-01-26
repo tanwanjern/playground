@@ -1,7 +1,7 @@
 import React, { useRef, useLayoutEffect } from 'react'
 import gsap from "gsap"
 
-function BasicTargeting({ children, vars }) {
+function BasicTargeting() {
     const el = useRef();
     const q = gsap.utils.selector(el);
     const tl = useRef();
