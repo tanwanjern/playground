@@ -3,11 +3,11 @@ import gsap from "gsap"
 
 function BasicTargeting() {
     const el = useRef();
-    const q = gsap.utils.selector(el);
     const tl = useRef();
     
     useLayoutEffect(() => {            
-    
+      const q = gsap.utils.selector(el);
+
       tl.current = gsap.timeline()
         .to(q(".shape-2"), {
           duration: 1,

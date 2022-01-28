@@ -18,3 +18,7 @@
 .link{
     @apply text-blue-600 underline;
 }
+
+.box{
+    @apply h-screen flex justify-center items-center relative;
+}

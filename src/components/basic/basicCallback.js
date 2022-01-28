@@ -3,7 +3,7 @@ import gsap from "gsap"
 
 function BasicCallback() {
 
-    const [tl, setTl] = useState(() => gsap.timeline());
+    const [tl] = useState(() => gsap.timeline());
 
     // pass a callback to child elements, this will add animations to the timeline
     const addAnimation = useCallback((animation, index) => {    

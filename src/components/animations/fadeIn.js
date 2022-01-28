@@ -11,13 +11,11 @@ const FadeIn = forwardRef(({ children, stagger = 0, x = 0 }, ref) => {
       stagger, 
       x 
     });        
-  }, []);
+  }, [stagger, x]);
   
   useEffect(() => {
-    
-    // forward the animation instance
     if (typeof ref === "function") {
-      ref(animation.current);
+      ref(animation.current);  
     } else if (ref) {
       ref.current = animation.current;
     }
