@@ -25,14 +25,14 @@ const Scroll = () => {
         Splitting({ by: 'chars' });
         
         const tl = gsap.timeline({paused: true})
-        
+
         tl.from(".text-animation .text span", {
             duration: 0.5, opacity: 0, stagger: 0.05, y: 30, ease: "power1.inOut",
             scrollTrigger: {
                 trigger: ref.current.querySelector(".text-animation"),
                 start: "top top", 
                 end: "+=500",
-                markers: true,
+                // markers: true,
                 toggleActions: "play pause resume reset",
                 scrub: true
             }
@@ -129,8 +129,9 @@ const BasicScroll = () => {
     }, []);
 
     return(
-        <div ref={ref}>
-            <div className="shape-container py-8 relative">
+        <div ref={ref} className="section mt-3">
+            <h3 className="title">Basic Scroll</h3>
+            <div className="shape-container relative">
                 <div className="shape shape-1 mb-3"></div>
             </div>
         </div>

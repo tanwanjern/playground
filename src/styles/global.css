@@ -19,6 +19,10 @@
     @apply text-blue-600 underline;
 }
 
+.link.invalid{
+    @apply text-gray-400;
+}
+
 .box{
     @apply h-screen flex justify-center items-center relative;
 }

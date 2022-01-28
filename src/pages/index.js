@@ -16,8 +16,19 @@ const IndexPage = () => {
           
           <div className="py-8">
             <h1 className="text-4xl font-bold mb-3">GSAP + React: Index</h1>
+          </div>
+
+          <div className="section">
+            <h3 className="text-lg font-bold">Experiment</h3>
             <Link to='/basic' className="link block">Go to Basic Experiment</Link>
             <Link to='/scroll' className="link block">Go to Scroll Trigger Experiment</Link>
+            <Link to='#' className="link block invalid">Go to SVG Experiment [PENDING]</Link>
+            <Link to='#' className="link block invalid">Go to Page Transition Experiment [PENDING]</Link>
+          </div>
+            
+          <div className="section">
+            <h3 className="text-lg font-bold">Showcase</h3>
+            <Link to='#' className="link block invalid">Go to Showcase 1 [PENDING]</Link>
           </div>
 
         </div>
