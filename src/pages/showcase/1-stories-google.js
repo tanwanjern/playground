@@ -7,10 +7,6 @@ import { StaticImage } from 'gatsby-plugin-image'
 
 import { gsap } from "gsap";
 
-// import "splitting/dist/splitting.css";
-// import "splitting/dist/splitting-cells.css";
-// import Splitting from "splitting";
-
 // https://stories.google/
 
 // PENDING BUG FIXES
@@ -24,8 +20,6 @@ const Showcase1 = () => {
     const textRef = useRef(null);
 
     useLayoutEffect(()=>{
-
-        // Splitting({ by: 'chars' });
 
         function intro(){
             const tl = gsap.timeline({
@@ -106,7 +100,7 @@ const Showcase1 = () => {
                         className="mb-5"
                         placeholder="blurred"
                     />
-                    <h1 className="hero-text text-6xl text-center" data-splitting><span className="font-bold">Stories</span> meet their widest audience ever</h1>
+                    <h1 className="hero-text text-6xl text-center"><span className="font-bold">Stories</span> meet their widest audience ever</h1>
                 </div>
             </div>
 
