@@ -21,7 +21,9 @@ import Splitting from "splitting";
 
 const Showcase1 = () => {
 
-    gsap.registerPlugin(ScrollTrigger);
+    if (typeof window !== "undefined") {
+        gsap.registerPlugin(ScrollTrigger);
+    }
 
     const phoneRef = useRef(null);
     const textRef = useRef(null);

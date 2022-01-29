@@ -16,7 +16,10 @@ import Splitting from "splitting";
 
 const Scroll = () => {
 
-    gsap.registerPlugin(ScrollTrigger);
+    if (typeof window !== "undefined") {
+        gsap.registerPlugin(ScrollTrigger);
+    }
+    
     const ref = useRef(null);
     const ref2 = useRef(null);
 
