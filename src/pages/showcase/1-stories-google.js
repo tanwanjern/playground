@@ -26,69 +26,71 @@ const Showcase1 = () => {
 
     useEffect(()=>{
 
-        gsap.registerPlugin(ScrollTrigger);
+        if (typeof window !== "undefined") {
+            gsap.registerPlugin(ScrollTrigger);
 
-        Splitting({ by: 'chars' });
+            Splitting({ by: 'chars' });
 
-        function intro(){
-            const tl = gsap.timeline({
-                delay: 0.5,
-            }) 
-            tl.fromTo(".hero-phone", {y: 500}, {y: 0, duration: 1})
-            tl.fromTo(".hero-element", {y: 300}, {y: 0, duration: 0.75, delay: function (index){
-                return 0.2 * index
-            }})
-            tl.fromTo(".hero-text", {opacity: 0}, {opacity: 1, duration: 0.5})
-            // tl.from(".hero-text .char", {
-            //     duration: 0.5, opacity: 0, stagger: 0.05, y: 30, ease: "expo",
-            // });
-            return tl;
+            function intro(){
+                const tl = gsap.timeline({
+                    delay: 0.5,
+                }) 
+                tl.fromTo(".hero-phone", {y: 500}, {y: 0, duration: 1})
+                tl.fromTo(".hero-element", {y: 300}, {y: 0, duration: 0.75, delay: function (index){
+                    return 0.2 * index
+                }})
+                tl.fromTo(".hero-text", {opacity: 0}, {opacity: 1, duration: 0.5})
+                // tl.from(".hero-text .char", {
+                //     duration: 0.5, opacity: 0, stagger: 0.05, y: 30, ease: "expo",
+                // });
+                return tl;
+            }
+
+            function phoneAnimation(){
+                const tl = gsap.timeline({
+                    delay: 1,
+                    scrollTrigger: {
+                        trigger: phoneRef.current,
+                        start: "top top", // (BUG): Trigger start point (top - 200)
+                        end: "+=1000",
+                        pin: true,
+                        scrub: true,
+                        markers: true
+                    }
+                })
+                tl.to(phoneRef.current, {scale: 0.8}, "+=0.2")
+                tl.to(".hero", {
+                    backgroundColor: '#212225',
+                    duration: 0.25
+                }, "-=2")
+
+                return tl;
+            }
+
+            function backgroundAnimaton(){
+                const tl2 = gsap.timeline({
+                    scrollTrigger:{
+                        trigger: textRef.current,
+                        start: "top center",
+                        scrub: true,
+                        // markers: true
+                    }
+                })
+                tl2.to(".hero", {
+                    backgroundColor: 'white',
+                    duration: 0.5
+                }, "-=2")
+
+                return tl2;
+            }
+
+            const master = gsap.timeline();
+            master.add(intro());
+            setTimeout(()=>{
+                master.add(phoneAnimation());
+                master.add(backgroundAnimaton());
+            }, 1000)
         }
-
-        function phoneAnimation(){
-            const tl = gsap.timeline({
-                delay: 1,
-                scrollTrigger: {
-                    trigger: phoneRef.current,
-                    start: "top top", // (BUG): Trigger start point (top - 200)
-                    end: "+=1000",
-                    pin: true,
-                    scrub: true,
-                    markers: true
-                }
-            })
-            tl.to(phoneRef.current, {scale: 0.8}, "+=0.2")
-            tl.to(".hero", {
-                backgroundColor: '#212225',
-                duration: 0.25
-            }, "-=2")
-
-            return tl;
-        }
-
-        function backgroundAnimaton(){
-            const tl2 = gsap.timeline({
-                scrollTrigger:{
-                    trigger: textRef.current,
-                    start: "top center",
-                    scrub: true,
-                    // markers: true
-                }
-            })
-            tl2.to(".hero", {
-                backgroundColor: 'white',
-                duration: 0.5
-            }, "-=2")
-
-            return tl2;
-        }
-
-        const master = gsap.timeline();
-        master.add(intro());
-        setTimeout(()=>{
-            master.add(phoneAnimation());
-            master.add(backgroundAnimaton());
-        }, 1000)
 
     }, [])
 
@@ -157,8 +159,10 @@ const Showcase1 = () => {
             </div>
 
             <div className="h-screen">
-                <div className="w-1/3 p-10">
-                    <p className="text-xl tracking-tight text-white">The tappable story format has never been more accessible—to creators and readers alike. See what happens when Google brings stories to the open web.</p>
+                <div className="flex items-center h-full">
+                    <div className="w-1/3 p-10">
+                        <p className="text-xl tracking-tight text-white">The tappable story format has never been more accessible—to creators and readers alike. See what happens when Google brings stories to the open web.</p>
+                    </div>
                 </div>
             </div>
 
