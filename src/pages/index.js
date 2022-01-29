@@ -28,7 +28,7 @@ const IndexPage = () => {
             
           <div className="section">
             <h3 className="text-lg font-bold">Showcase</h3>
-            <Link to='#' className="link block invalid">Go to Showcase 1 [PENDING]</Link>
+            <Link to='/showcase/1-stories-google' className="link block">Go to Showcase 1: Stories Google [In progress]</Link>
           </div>
 
         </div>
