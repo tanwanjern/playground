@@ -9,15 +9,10 @@ import { gsap } from "gsap";
 
 // https://stories.google/
 
-// PENDING BUG FIXES
-// - Phone ref scroll trigger start point 
-// - Responsive animation
-// - Smoothness
-
 const Showcase1 = () => {
 
     const phoneRef = useRef(null);
-    const textRef = useRef(null);
+    const captionRef = useRef(null);
 
     useLayoutEffect(()=>{
 
@@ -25,12 +20,12 @@ const Showcase1 = () => {
             const tl = gsap.timeline({
                 delay: 0.5,
             }) 
-            tl.fromTo(".hero-phone", {y: 500}, {y: 0, duration: 1})
-            tl.fromTo(".hero-element", {y: 300}, {y: 0, duration: 0.75, delay: function (index){
+            tl.fromTo(".hero-phone", {y: 384}, {y: 8, duration: 1})
+            tl.fromTo(".hero-story", {y: 300}, {y: 0, duration: 0.75, delay: function (index){
                 return 0.2 * index
             }})
-            tl.fromTo(".hero-text", {opacity: 0}, {opacity: 1, duration: 0.5})
-            // tl.from(".hero-text .char", {
+            tl.fromTo(".hero-headline", {opacity: 0}, {opacity: 1, duration: 0.5})
+            // tl.from(".hero-headline .char", {
             //     duration: 0.5, opacity: 0, stagger: 0.05, y: 30, ease: "expo",
             // });
             return tl;
@@ -41,18 +36,20 @@ const Showcase1 = () => {
                 delay: 1,
                 scrollTrigger: {
                     trigger: phoneRef.current,
-                    start: "top top", // (BUG): Trigger start point (top - 200)
-                    end: "+=600",
+                    start: "top top",
+                    end: "+=800",
                     pin: true,
+                    pinType: 'fixed',
                     scrub: true,
                     markers: true
                 }
             })
-            tl.to(phoneRef.current, {scale: 0.8}, "+=0.2")
             tl.to(".hero", {
                 backgroundColor: '#212225',
-                duration: 0.25
-            }, "-=2")
+                duration: 0.25,
+                ease: 'power1.in'
+            }, "+=5")
+            tl.to(".hero-phone", {scale: 0.8, duration: 6, ease: "circ.out"}, "+=2")
 
             return tl;
         }
@@ -60,7 +57,7 @@ const Showcase1 = () => {
         function backgroundAnimaton(){
             const tl2 = gsap.timeline({
                 scrollTrigger:{
-                    trigger: textRef.current,
+                    trigger: captionRef.current,
                     start: "top center",
                     scrub: true,
                     // markers: true
@@ -68,7 +65,8 @@ const Showcase1 = () => {
             })
             tl2.to(".hero", {
                 backgroundColor: 'white',
-                duration: 0.5
+                duration: 0.5,
+                ease: 'power1.out'
             }, "-=2")
 
             return tl2;
@@ -76,9 +74,7 @@ const Showcase1 = () => {
 
         const master = gsap.timeline();
         master.add(intro());
-        setTimeout(()=>{
-            master.add(phoneAnimation());
-        }, 1000)
+        master.add(phoneAnimation());
         master.add(backgroundAnimaton());
 
     }, [])
@@ -100,12 +96,12 @@ const Showcase1 = () => {
                         className="mb-5"
                         placeholder="blurred"
                     />
-                    <h1 className="hero-text text-6xl text-center"><span className="font-bold">Stories</span> meet their widest audience ever</h1>
+                    <h1 className="hero-headline text-6xl text-center"><span className="font-bold">Stories</span> meet their widest audience ever</h1>
                 </div>
             </div>
 
-            <div className="hero-phone absolute top-96 left-0 w-full" ref={phoneRef}>
-                <div className="flex justify-center relative w-2/6 mx-auto">
+            <div className="absolute top-96 left-0 w-full" ref={phoneRef}>
+                <div className="hero-phone flex justify-center relative w-[380px] mx-auto">
                     <div className="w-full aspect-[9.3/20] bg-black rounded-[50px]"></div>
                     <div className="absolute top-[5%] right-0 left-0">
                         <video
@@ -116,8 +112,8 @@ const Showcase1 = () => {
                 </div>
             </div>
         
-            <div className="pb-8">
-                <div className="flex flex-row gap-4 mx-5">
+            <div className="pb-16">
+                <div className="flex flex-row gap-4 mx-8">
                     {
                         Array(5).fill(0).map((item, index)=>{
 
@@ -125,9 +121,9 @@ const Showcase1 = () => {
 
                             return(
                                 index === 2 ? (
-                                    <div className="w-2/6 mx-8" key={"heroElement"+index}></div>
+                                    <div className="w-[380px] mx-8" key={"story"+index}></div>
                                 ):(
-                                    <div className={`hero-element w-1/6 ${itemTop[index]}`} key={"heroElement"+index}>
+                                    <div className={`hero-story w-1/6 ${itemTop[index]}`} key={"story"+index}>
                                         <div className="w-full aspect-[9/16] rounded-2xl overflow-hidden bg-gray-100">
                                             <StaticImage
                                                 src="https://lh3.googleusercontent.com/WTVf7YDXhBKR_Mr48EPvuEjsU4zvSGsHl2yBp0S2EHv-a3LT6JqMvEdzxIqWOCV0lS0LuskC429JKYGvMWtohM36qpeeHCeWvhfv=s0"
@@ -147,16 +143,37 @@ const Showcase1 = () => {
                 </div>
             </div>
 
-            <div className="h-screen">
-                <div className="flex items-center h-full">
+            <div className="h-screen relative z-50 px-8">
+                <div className="flex items-center h-full justify-between">
                     <div className="w-1/3 p-10">
                         <p className="text-xl tracking-tight text-white">The tappable story format has never been more accessible—to creators and readers alike. See what happens when Google brings stories to the open web.</p>
+                    </div>
+                    <div className="w-1/3 p-10">
+                        <p className="text-lg tracking-tight text-white mb-5">Making an impact at</p>
+                        <div className="grid grid-cols-3 gap-4">
+                            {
+                                Array(12).fill(0).map((item, index)=>{
+                                    return(
+                                        <StaticImage
+                                            src="https://lh3.googleusercontent.com/-E3n3JJeXPS__QEqOHROLvz4jN-_-r7ND-O0Fil1xREJAQ68o7sq3ajoxQn1yEgtPEzuSowMBN_wTSs8vulGeZ5It4YBGtXvfz45Ng=s0"
+                                            width={100}
+                                            // aspectRatio={9/16}
+                                            quality={100}
+                                            formats={["auto", "webp", "avif"]}
+                                            alt="Image of google stories"
+                                            placeholder="blurred"
+                                            key={"logo"+index}
+                                        />
+                                    )
+                                })
+                            }
+                        </div>
                     </div>
                 </div>
             </div>
 
-            <div className="h-screen" ref={textRef}>
-                <div className="w-2/3 mx-auto flex justify-center items-center h-full">
+            <div className="h-screen" ref={captionRef}>
+                <div className="w-3/4 xl:w-2/4 mx-auto flex justify-center items-center h-full">
                     <h3 className="text-center text-6xl font-bold">Visual stories that feel like yours, because they are.</h3>
                 </div>
             </div>
