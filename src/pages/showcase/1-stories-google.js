@@ -21,14 +21,12 @@ import Splitting from "splitting";
 
 const Showcase1 = () => {
 
-    if (typeof window !== "undefined") {
-        gsap.registerPlugin(ScrollTrigger);
-    }
-
     const phoneRef = useRef(null);
     const textRef = useRef(null);
 
     useEffect(()=>{
+
+        gsap.registerPlugin(ScrollTrigger);
 
         Splitting({ by: 'chars' });
 
@@ -135,7 +133,7 @@ const Showcase1 = () => {
                             const itemTop = ['mt-12', 'mt-4', 'mt-0', 'mt-0', 'mt-16'];
 
                             return(
-                                index == 2 ? (
+                                index === 2 ? (
                                     <div className="w-2/6 mx-8"></div>
                                 ):(
                                     <div className={`hero-element w-1/6 ${itemTop[index]}`}>

@@ -15,15 +15,13 @@ import Splitting from "splitting";
 // https://greensock.com/docs/v3/Eases
 
 const Scroll = () => {
-
-    if (typeof window !== "undefined") {
-        gsap.registerPlugin(ScrollTrigger);
-    }
     
     const ref = useRef(null);
     const ref2 = useRef(null);
 
     useEffect(() => {
+
+        gsap.registerPlugin(ScrollTrigger);
 
         Splitting({ by: 'chars' });
         
