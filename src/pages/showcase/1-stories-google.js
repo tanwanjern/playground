@@ -6,11 +6,10 @@ import Seo from "../../components/seo"
 import { StaticImage } from 'gatsby-plugin-image'
 
 import { gsap } from "gsap";
-import { ScrollTrigger } from "gsap/ScrollTrigger";
 
-import "splitting/dist/splitting.css";
-import "splitting/dist/splitting-cells.css";
-import Splitting from "splitting";
+// import "splitting/dist/splitting.css";
+// import "splitting/dist/splitting-cells.css";
+// import Splitting from "splitting";
 
 // https://stories.google/
 
@@ -19,10 +18,6 @@ import Splitting from "splitting";
 // - Responsive animation
 // - Smoothness
 
-if (typeof document !== `undefined`) {
-    gsap.registerPlugin(ScrollTrigger);
-}
-
 const Showcase1 = () => {
 
     const phoneRef = useRef(null);
@@ -30,7 +25,7 @@ const Showcase1 = () => {
 
     useLayoutEffect(()=>{
 
-        Splitting({ by: 'chars' });
+        // Splitting({ by: 'chars' });
 
         function intro(){
             const tl = gsap.timeline({

@@ -5,7 +5,6 @@ import Layout from "../components/layout"
 import Seo from "../components/seo"
 
 import { gsap } from "gsap";
-import { ScrollTrigger } from "gsap/ScrollTrigger";
 
 import "splitting/dist/splitting.css";
 import "splitting/dist/splitting-cells.css";
@@ -20,8 +19,6 @@ const Scroll = () => {
     const ref2 = useRef(null);
 
     useEffect(() => {
-
-        gsap.registerPlugin(ScrollTrigger);
 
         Splitting({ by: 'chars' });
         

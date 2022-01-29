@@ -7,6 +7,13 @@ import Header from "./header"
 import "../styles/global.css"
 import "../styles/tailwind.css"
 
+import { gsap } from "gsap";
+import { ScrollTrigger } from "gsap/ScrollTrigger";
+
+if (typeof document !== `undefined`) {
+    gsap.registerPlugin(ScrollTrigger);
+}
+
 const Layout = ({ children }) => {
   const data = useStaticQuery(graphql`
     query SiteTitleQuery {
