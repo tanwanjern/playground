@@ -1,4 +1,4 @@
-import React, { useEffect, useRef } from 'react'
+import React, { useEffect, useLayoutEffect, useRef } from 'react'
 import { Link } from "gatsby"
 
 import Layout from "../../components/layout"
@@ -19,78 +19,78 @@ import Splitting from "splitting";
 // - Responsive animation
 // - Smoothness
 
+if (typeof document !== `undefined`) {
+    gsap.registerPlugin(ScrollTrigger);
+}
+
 const Showcase1 = () => {
 
     const phoneRef = useRef(null);
     const textRef = useRef(null);
 
-    useEffect(()=>{
+    useLayoutEffect(()=>{
 
-        if (typeof window !== "undefined") {
-            gsap.registerPlugin(ScrollTrigger);
+        Splitting({ by: 'chars' });
 
-            Splitting({ by: 'chars' });
-
-            function intro(){
-                const tl = gsap.timeline({
-                    delay: 0.5,
-                }) 
-                tl.fromTo(".hero-phone", {y: 500}, {y: 0, duration: 1})
-                tl.fromTo(".hero-element", {y: 300}, {y: 0, duration: 0.75, delay: function (index){
-                    return 0.2 * index
-                }})
-                tl.fromTo(".hero-text", {opacity: 0}, {opacity: 1, duration: 0.5})
-                // tl.from(".hero-text .char", {
-                //     duration: 0.5, opacity: 0, stagger: 0.05, y: 30, ease: "expo",
-                // });
-                return tl;
-            }
-
-            function phoneAnimation(){
-                const tl = gsap.timeline({
-                    delay: 1,
-                    scrollTrigger: {
-                        trigger: phoneRef.current,
-                        start: "top top", // (BUG): Trigger start point (top - 200)
-                        end: "+=1000",
-                        pin: true,
-                        scrub: true,
-                        markers: true
-                    }
-                })
-                tl.to(phoneRef.current, {scale: 0.8}, "+=0.2")
-                tl.to(".hero", {
-                    backgroundColor: '#212225',
-                    duration: 0.25
-                }, "-=2")
-
-                return tl;
-            }
-
-            function backgroundAnimaton(){
-                const tl2 = gsap.timeline({
-                    scrollTrigger:{
-                        trigger: textRef.current,
-                        start: "top center",
-                        scrub: true,
-                        // markers: true
-                    }
-                })
-                tl2.to(".hero", {
-                    backgroundColor: 'white',
-                    duration: 0.5
-                }, "-=2")
-
-                return tl2;
-            }
-
-            const master = gsap.timeline();
-            master.add(intro());
-            setTimeout(()=>{
-                master.add(phoneAnimation());
-                master.add(backgroundAnimaton());
-            }, 1000)
+        function intro(){
+            const tl = gsap.timeline({
+                delay: 0.5,
+            }) 
+            tl.fromTo(".hero-phone", {y: 500}, {y: 0, duration: 1})
+            tl.fromTo(".hero-element", {y: 300}, {y: 0, duration: 0.75, delay: function (index){
+                return 0.2 * index
+            }})
+            tl.fromTo(".hero-text", {opacity: 0}, {opacity: 1, duration: 0.5})
+            // tl.from(".hero-text .char", {
+            //     duration: 0.5, opacity: 0, stagger: 0.05, y: 30, ease: "expo",
+            // });
+            return tl;
         }
+
+        function phoneAnimation(){
+            const tl = gsap.timeline({
+                delay: 1,
+                scrollTrigger: {
+                    trigger: phoneRef.current,
+                    start: "top top", // (BUG): Trigger start point (top - 200)
+                    end: "+=600",
+                    pin: true,
+                    scrub: true,
+                    markers: true
+                }
+            })
+            tl.to(phoneRef.current, {scale: 0.8}, "+=0.2")
+            tl.to(".hero", {
+                backgroundColor: '#212225',
+                duration: 0.25
+            }, "-=2")
+
+            return tl;
+        }
+
+        function backgroundAnimaton(){
+            const tl2 = gsap.timeline({
+                scrollTrigger:{
+                    trigger: textRef.current,
+                    start: "top center",
+                    scrub: true,
+                    // markers: true
+                }
+            })
+            tl2.to(".hero", {
+                backgroundColor: 'white',
+                duration: 0.5
+            }, "-=2")
+
+            return tl2;
+        }
+
+        const master = gsap.timeline();
+        master.add(intro());
+        setTimeout(()=>{
+            master.add(phoneAnimation());
+        }, 1000)
+        master.add(backgroundAnimaton());
 
     }, [])
 
@@ -127,7 +127,7 @@ const Showcase1 = () => {
                 </div>
             </div>
         
-            <div className="h-screen">
+            <div className="pb-8">
                 <div className="flex flex-row gap-4 mx-5">
                     {
                         Array(5).fill(0).map((item, index)=>{
@@ -136,9 +136,9 @@ const Showcase1 = () => {
 
                             return(
                                 index === 2 ? (
-                                    <div className="w-2/6 mx-8"></div>
+                                    <div className="w-2/6 mx-8" key={"heroElement"+index}></div>
                                 ):(
-                                    <div className={`hero-element w-1/6 ${itemTop[index]}`}>
+                                    <div className={`hero-element w-1/6 ${itemTop[index]}`} key={"heroElement"+index}>
                                         <div className="w-full aspect-[9/16] rounded-2xl overflow-hidden bg-gray-100">
                                             <StaticImage
                                                 src="https://lh3.googleusercontent.com/WTVf7YDXhBKR_Mr48EPvuEjsU4zvSGsHl2yBp0S2EHv-a3LT6JqMvEdzxIqWOCV0lS0LuskC429JKYGvMWtohM36qpeeHCeWvhfv=s0"
