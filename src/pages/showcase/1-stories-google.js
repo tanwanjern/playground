@@ -10,7 +10,8 @@ import useWindowDimensions from "../../hooks/useWindowDimensions"
 // import SplitText from "../../components/splitText"
 
 // https://stories.google/
-// TODO: Fix missing dependency: 'width'
+// TODO: Prevent running multiple times when resizing
+// https://www.pluralsight.com/guides/re-render-react-component-on-window-resize
 // TODO: Play video on scroll
 // TODO: Feature components
 // TODO: And more..
@@ -20,15 +21,16 @@ const Showcase1 = () => {
     const phoneRef = useRef(null);
     const captionRef = useRef(null);
     const storiesRef = useRef(null);
+
     const {width} = useWindowDimensions();
-    
+
     useLayoutEffect(()=>{
 
         function intro(){
             const tl = gsap.timeline({
                 delay: 0.5,
             }) 
-            tl.fromTo(".hero-phone", {y: width > 768 ? 384:426}, {y: 8, duration: 1})
+            tl.fromTo(".hero-phone", {y: width < 768 ? 426:384}, {y: 8, duration: 1})
             tl.fromTo(".hero-story", {y: 300}, {y: 0, duration: 0.75, delay: function (index){
                 return 0.2 * index
             }})
@@ -39,7 +41,7 @@ const Showcase1 = () => {
             return tl;
         }
 
-        const scrollEnd =  width > 768 ? 800 : 300;
+        const scrollEnd =  width < 768 ? 300:800;
         function phoneAnimation(){
             const tl = gsap.timeline({
                 delay: 1,
@@ -82,11 +84,15 @@ const Showcase1 = () => {
         }
 
         const master = gsap.timeline();
-        master.add(intro());
-        master.add(phoneAnimation());
-        master.add(backgroundAnimaton());
 
-    }, [])
+        if(width){
+            master.add(intro());
+            master.add(phoneAnimation());
+            master.add(backgroundAnimaton());
+            console.log(width)
+        }
+
+    }, [width])
 
     return(
         <Layout>
@@ -94,7 +100,7 @@ const Showcase1 = () => {
             
             <div className="hero relative">
 
-                <div className="mx-auto pt-24 pb-72 w-11/12 md:w-3/6">
+                <div className="mx-auto pt-24 pb-72 w-11/12 md:4/6 lg:w-3/6">
                     <div className="flex flex-col justify-center items-center">
                         <StaticImage
                             src="https://stories.google/static/img/web-stories-logo.png?cache=7e03646"
@@ -150,12 +156,12 @@ const Showcase1 = () => {
                 <div className="h-screen md:h-auto md:pb-16"  ref={storiesRef}>
                     <div className="flex flex-row gap-4 -mx-4 md:mx-8">
                         {
-                            Array(width > 768 ? 5:3).fill(0).map((item, index)=>{
+                            Array(width < 768 ? 3:5).fill(0).map((item, index)=>{
 
                                 const itemTop = ['mt-12', 'mt-4', 'mt-0', 'mt-0', 'mt-16'];
 
                                 return(
-                                    index === (width > 768 ? 2:1) ? (
+                                    index === (width < 768 ? 1:2) ? (
                                         <div className="w-2/4 md:w-[380px] mx-8" key={"story"+index}></div>
                                     ):(
                                         <div className={`hero-story w-2/3 md:w-1/6 ${itemTop[index]}`} key={"story"+index}>
