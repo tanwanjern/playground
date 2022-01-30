@@ -38,6 +38,9 @@ const Showcase1 = () => {
         }
 
         const scrollEnd =  width < 768 ? 250:1000;
+        // const phoneEnd = width < 768 ? width - phoneRef.current.offsetWidth : phoneRef.current.offsetWidth-200;
+        // console.log(phoneRef.current.offsetWidth, phoneEnd, width)
+
         function phoneAnimation(){
             const tl = gsap.timeline({
                 delay: 1,
@@ -48,7 +51,7 @@ const Showcase1 = () => {
                     pin: true,
                     pinType: 'fixed',
                     scrub: true,
-                    markers: true
+                    markers: true,
                 }
             })
             tl.to(".hero", {
@@ -82,13 +85,6 @@ const Showcase1 = () => {
         const master = gsap.timeline();
 
         if(width){
-            // console.log(master)
-
-            // master.clear();
-            // master.invalidate();
-            // master.restart();
-            // master.remove([intro(), phoneAnimation(), backgroundAnimaton()])
-
             master.add(intro());
             master.add(phoneAnimation());
             master.add(backgroundAnimaton());
