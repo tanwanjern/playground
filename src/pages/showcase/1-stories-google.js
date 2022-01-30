@@ -1,4 +1,4 @@
-import React, { useEffect, useLayoutEffect, useRef } from "react"
+import React, { useLayoutEffect, useRef } from "react"
 import { Link } from "gatsby"
 
 import Layout from "../../components/layout"
@@ -10,8 +10,7 @@ import useWindowDimensions from "../../hooks/useWindowDimensions"
 // import SplitText from "../../components/splitText"
 
 // https://stories.google/
-// TODO: Prevent running multiple times when resizing
-// https://www.pluralsight.com/guides/re-render-react-component-on-window-resize
+// TODO: Improve performance and behaviour when resizing
 // TODO: Play video on scroll
 // TODO: Feature components
 // TODO: And more..
@@ -20,7 +19,6 @@ const Showcase1 = () => {
 
     const phoneRef = useRef(null);
     const captionRef = useRef(null);
-    const storiesRef = useRef(null);
 
     const {width} = useWindowDimensions();
 
@@ -30,18 +28,16 @@ const Showcase1 = () => {
             const tl = gsap.timeline({
                 delay: 0.5,
             }) 
-            tl.fromTo(".hero-phone", {y: width < 768 ? 426:384}, {y: 8, duration: 1})
-            tl.fromTo(".hero-story", {y: 300}, {y: 0, duration: 0.75, delay: function (index){
+            tl.fromTo(".hero-phone", {y: width < 768 ? 426:384, opacity: 0}, {y: 8, opacity: 1, duration: 1})
+            tl.fromTo(".hero-story", {y: 300, opacity: 0}, {y: 0, opacity: 1, duration: 0.75, delay: function (index){
                 return 0.2 * index
             }})
             tl.fromTo(".hero-headline .text", {opacity: 0, yPercent: 100}, {opacity: 1, yPercent:0, duration: 0.5, stagger: 0.05, ease: "SlowMo.easeOut"})
-            // tl.from(".hero-headline .char", {
-            //     duration: 0.5, opacity: 0, stagger: 0.05, y: 30, ease: "expo",
-            // });
+            
             return tl;
         }
 
-        const scrollEnd =  width < 768 ? 300:800;
+        const scrollEnd =  width < 768 ? 250:1000;
         function phoneAnimation(){
             const tl = gsap.timeline({
                 delay: 1,
@@ -52,7 +48,7 @@ const Showcase1 = () => {
                     pin: true,
                     pinType: 'fixed',
                     scrub: true,
-                    // markers: true
+                    markers: true
                 }
             })
             tl.to(".hero", {
@@ -86,10 +82,16 @@ const Showcase1 = () => {
         const master = gsap.timeline();
 
         if(width){
+            // console.log(master)
+
+            // master.clear();
+            // master.invalidate();
+            // master.restart();
+            // master.remove([intro(), phoneAnimation(), backgroundAnimaton()])
+
             master.add(intro());
             master.add(phoneAnimation());
             master.add(backgroundAnimaton());
-            console.log(width)
         }
 
     }, [width])
@@ -100,7 +102,7 @@ const Showcase1 = () => {
             
             <div className="hero relative">
 
-                <div className="mx-auto pt-24 pb-72 w-11/12 md:4/6 lg:w-3/6">
+                <div className="mx-auto pt-24 pb-72 w-11/12 md:w-5/6 lg:w-4/6 xl:w-3/6 2xl:w-2/6">
                     <div className="flex flex-col justify-center items-center">
                         <StaticImage
                             src="https://stories.google/static/img/web-stories-logo.png?cache=7e03646"
@@ -146,14 +148,14 @@ const Showcase1 = () => {
                         <div className="w-full aspect-[9.3/20] bg-black rounded-[50px]"></div>
                         <div className="absolute top-[5%] right-0 left-0">
                             <video
-                                className="w-[95%] h-[92.5%] mx-auto object-cover rounded-3xl overflow-hidden drop-shadow-[0_35px_35px_rgba(0,0,0,0.25)]"
+                                className="bg-white w-[95%] h-[92.5%] mx-auto object-cover rounded-3xl overflow-hidden drop-shadow-[0_35px_35px_rgba(0,0,0,0.25)]"
                                 src="https://kstatic.googleusercontent.com/files/c44f15bb7e678d651e18fdee3058f2948aa733849e0dea3daf7429bf0f77ec23bd670dba63e71739d5b53489c98689bdbb80c47cf55f44649d9d1bfdf3e4f0a0"
                             />
                         </div>
                     </div>
                 </div>
             
-                <div className="h-screen md:h-auto md:pb-16"  ref={storiesRef}>
+                <div className="h-screen md:h-auto md:pb-16 w-full overflow-hidden">
                     <div className="flex flex-row gap-4 -mx-4 md:mx-8">
                         {
                             Array(width < 768 ? 3:5).fill(0).map((item, index)=>{
@@ -162,10 +164,10 @@ const Showcase1 = () => {
 
                                 return(
                                     index === (width < 768 ? 1:2) ? (
-                                        <div className="w-2/4 md:w-[380px] mx-8" key={"story"+index}></div>
+                                        <div className="w-2/4 md:w-[380px] mx-4" key={"story"+index}></div>
                                     ):(
-                                        <div className={`hero-story w-2/3 md:w-1/6 ${itemTop[index]}`} key={"story"+index}>
-                                            <div className="w-full aspect-[9/16] rounded-2xl overflow-hidden bg-gray-100 translate-z-0">
+                                        <div className={`hero-story w-2/3 md:flex-1 ${itemTop[index]}`} key={"story"+index}>
+                                            <div className="w-full aspect-[9/16] rounded-2xl overflow-hidden translate-z-0">
                                                 <StaticImage
                                                     src="https://lh3.googleusercontent.com/WTVf7YDXhBKR_Mr48EPvuEjsU4zvSGsHl2yBp0S2EHv-a3LT6JqMvEdzxIqWOCV0lS0LuskC429JKYGvMWtohM36qpeeHCeWvhfv=s0"
                                                     aspectRatio={9/16}

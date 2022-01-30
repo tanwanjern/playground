@@ -1,3 +1,4 @@
+import { debounce } from 'lodash';
 import { useState, useEffect } from 'react';
 
 export default function useWindowDimensions() {
@@ -21,7 +22,7 @@ export default function useWindowDimensions() {
         setWindowDimensions(getWindowDimensions());
       }
 
-      window.addEventListener('resize', handleResize);
+      window.addEventListener('resize', debounce(handleResize, 240));
       return () => window.removeEventListener('resize', handleResize);
     }
   }, [hasWindow]);
