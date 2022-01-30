@@ -15,13 +15,15 @@ const IndexPage = () => {
         <div className="container mx-auto">
           
           <div className="py-8">
-            <h1 className="text-4xl font-bold mb-3">GSAP + React: Index</h1>
+            <h1 className="text-4xl font-bold">GSAP Playground: Homepage</h1>
+            <p className="text-purple-600 font-medium italic font-serif">Gatsby JS (React JS) + GSAP + Tailwind CSS</p>
           </div>
 
           <div className="section">
             <h3 className="text-lg font-bold">Experiment</h3>
             <Link to='/basic' className="link block">Go to Basic Experiment</Link>
             <Link to='/scroll' className="link block">Go to Scroll Trigger Experiment</Link>
+            <Link to='#' className="link block invalid">Go to Text Animation Experiment [PENDING]</Link>
             <Link to='#' className="link block invalid">Go to SVG Experiment [PENDING]</Link>
             <Link to='#' className="link block invalid">Go to Page Transition Experiment [PENDING]</Link>
           </div>

@@ -26,3 +26,7 @@
 .box{
     @apply h-screen flex justify-center items-center relative;
 }
+
+.translate-z-0{
+    transform: translateZ(0);
+}

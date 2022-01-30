@@ -58,7 +58,7 @@ const Scroll = () => {
             <div className="container mx-auto">
                 
                 <div className="py-8">
-                    <h1 className="text-4xl font-bold mb-3">GSAP + React: Scroll Trigger</h1>
+                    <h1 className="text-4xl font-bold mb-3">GSAP Playground: Scroll Trigger</h1>
                     <Link to='/' className="link">Go to Home</Link>
                 </div>
                 

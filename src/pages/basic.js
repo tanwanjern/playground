@@ -17,7 +17,7 @@ const IndexPage = () => {
         <div className="container mx-auto">
           
           <div className="py-8">
-            <h1 className="text-4xl font-bold mb-3">GSAP + React: Basic Experiment</h1>
+            <h1 className="text-4xl font-bold mb-3">GSAP Playground: Basic Experiment</h1>
             <Link to='/' className="link">Go to Home</Link>
           </div>
           
